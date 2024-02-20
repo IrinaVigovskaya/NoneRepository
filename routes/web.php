@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::get('/hello', function () {
     return view('hello', ['title' => 'Hello world!']);
 });
+
+Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
+
+Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+
+Route::get('/task', [\App\Http\Controllers\TaskController::class, 'index']);
