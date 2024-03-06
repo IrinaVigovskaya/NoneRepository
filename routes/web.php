@@ -26,3 +26,13 @@ Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
 Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'show']);
 
 Route::get('/task', [\App\Http\Controllers\TaskController::class, 'index']);
+
+Route::get('/task/create', [\App\Http\Controllers\TaskController::class, 'create']);
+
+Route::post('/task', [\App\Http\Controllers\TaskController::class, 'store']);
+
+Route::get('/task/edit/{id}', [\App\Http\Controllers\TaskController::class, 'edit']);
+
+Route::post('/task/update/{id}', [\App\Http\Controllers\TaskController::class, 'update']);
+
+Route::get('/task/destroy/{id}', [\App\Http\Controllers\TaskController::class, 'destroy']);

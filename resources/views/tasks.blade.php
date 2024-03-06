@@ -19,6 +19,10 @@
                 <td>{{$task->task_name}}</td>
                 <td>{{$task->task_description}}</td>
                 <td>{{$task->task_due_date}}</td>
+                <td>
+                    <a href="{{url('task/destroy/'.$task->id)}}">Удалить</a>
+                    <a href="{{url('task/edit/'.$task->id)}}">Редактировать</a>
+                </td>
             </tr>
     @endforeach
     </table>
