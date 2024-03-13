@@ -12,10 +12,11 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perpage = $request->perpage ?? 2;
         return view('tasks', [
-            'tasks' => Task::all()
+            'tasks' => Task::paginate($perpage)->withQueryString()
         ]);
     }
     /**
@@ -39,9 +40,10 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'description'=> 'max:500',
-            'task_date'=>'required|after:now'
+            'task_name' => 'required|max:255',
+            'task_description'=> 'required|max:500',
+            'task_due_date'=>'required|after:now',
+            'user_id'=>'required|integer'
         ]);
         $task = new Task($validated);
         $task->save();
@@ -83,14 +85,16 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'description'=> 'max:500',
-            'task_date'=>'required|after:now'
+            'task_name' => 'required|max:255',
+            'task_description'=> 'max:500',
+            'task_due_date'=>'required|after:now',
+            'user_id'=>'required|integer'
         ]);
         $task = Task::all()->where('id', $id)->first();
-        $task->name = $validated['name'];
-        $task->description = $validated['description'];
-        $task->task_date = $validated['task_date'];
+        $task->task_name = $validated['task_name'];
+        $task->task_description = $validated['task_description'];
+        $task->task_due_date = $validated['task_due_date'];
+        $task->user_id = $validated['user_id'];
         $task->save();
         return redirect('/task');
     }
