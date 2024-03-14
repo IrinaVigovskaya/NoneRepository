@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Session;
+use Gate;
+
 class TaskController extends Controller
 {
     /**
@@ -107,6 +110,10 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('destroy-task', Task::all()->where('id', $id)->first())){
+            return redirect('/error')->with('message',
+                'У вас нет разрешения на удаление задачи под номером ' . $id);
+        }
         Task::destroy($id);
         return redirect('/task');
     }

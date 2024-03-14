@@ -21,18 +21,28 @@ Route::get('/hello', function () {
     return view('hello', ['title' => 'Hello world!']);
 });
 
-Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
+Route::get('/user', [\App\Http\Controllers\UserController::class, 'index'])->middleware('auth');
 
-Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'show'])->middleware('auth');
 
-Route::get('/task', [\App\Http\Controllers\TaskController::class, 'index']);
+Route::get('/task', [\App\Http\Controllers\TaskController::class, 'index'])->middleware('auth');
 
-Route::get('/task/create', [\App\Http\Controllers\TaskController::class, 'create']);
+Route::post('/task', [\App\Http\Controllers\TaskController::class, 'store'])->middleware('auth');
 
-Route::post('/task', [\App\Http\Controllers\TaskController::class, 'store']);
+Route::get('/task/create', [\App\Http\Controllers\TaskController::class, 'create'])->middleware('auth');
 
-Route::get('/task/edit/{id}', [\App\Http\Controllers\TaskController::class, 'edit']);
+Route::get('/task/edit/{id}', [\App\Http\Controllers\TaskController::class, 'edit'])->middleware('auth');
 
-Route::post('/task/update/{id}', [\App\Http\Controllers\TaskController::class, 'update']);
+Route::post('/task/update/{id}', [\App\Http\Controllers\TaskController::class, 'update'])->middleware('auth');
 
-Route::get('/task/destroy/{id}', [\App\Http\Controllers\TaskController::class, 'destroy']);
+Route::get('/task/destroy/{id}', [\App\Http\Controllers\TaskController::class, 'destroy'])->middleware('auth');
+
+Route::get('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+
+Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
+
+Route::post('/auth', [\App\Http\Controllers\LoginController::class, 'authenticate']);
+
+Route::get('/error', function (){
+    return view('error', ['message' => session('message')]);
+});
