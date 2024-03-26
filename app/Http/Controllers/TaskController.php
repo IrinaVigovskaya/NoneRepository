@@ -30,7 +30,7 @@ class TaskController extends Controller
     public function create()
     {
         return view('task_create', [
-            'users' => User::all()
+            'users' => User::all(), 'message' => ''
         ]);
     }
 
