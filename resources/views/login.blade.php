@@ -43,7 +43,7 @@
     </form>
     @else
         <ul class="navbar-nav">
-            <li><a class="nav-link active" href="#"><i class="fa fa-user" style="font-size:70px; color:black;"></i>
+            <li><a class="nav-link active" href="#"><i style="font-size:70px; color:black;"></i>
                     {{ Auth::user()->username }}</a></li>
             <li><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('logout')}}">Выйти</a></li>
         </ul>

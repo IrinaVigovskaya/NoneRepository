@@ -37,7 +37,7 @@ Route::post('/task/update/{id}', [\App\Http\Controllers\TaskController::class, '
 
 Route::get('/task/destroy/{id}', [\App\Http\Controllers\TaskController::class, 'destroy'])->middleware('auth');
 
-Route::get('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+Route::get('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
 Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
 
