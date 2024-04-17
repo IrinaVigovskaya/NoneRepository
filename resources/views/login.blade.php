@@ -1,3 +1,6 @@
+@extends('layout2')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -32,6 +35,7 @@
         </div>
     </nav>
 @if(!Auth::user())
+    <br><br><br>
     <h2>Вход в систему</h2>
     <form class="d-flex" method="post" action="{{url('auth')}}">
     @csrf

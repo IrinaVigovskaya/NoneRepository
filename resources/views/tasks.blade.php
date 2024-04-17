@@ -1,3 +1,6 @@
+@extends('layout')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +8,7 @@
     <title>609-11</title>
 </head>
 <body>
+    <br><br><br>
     <h2>Список задач</h2>
     <table border="1">
         <thead>
