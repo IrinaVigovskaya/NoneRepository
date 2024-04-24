@@ -56,7 +56,7 @@
                     @foreach ($elements as $element)
                         {{-- "Three Dots" Separator --}}
                         @if (is_string($element))
-                            <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
+                            <li class="page-item disabled bg-dark" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
                         @endif
 
                         {{-- Array Of Links --}}
@@ -86,3 +86,21 @@
         </div>
     </nav>
 @endif
+
+
+Элементов на странице:
+<div class="row justify-content-center">
+<div class="col-4">
+<form method="get" action="{{url('task')}}">
+    <select name="perpage">
+        <option value="2" @if($paginator->perPage() == 2) selected @endif >2</option>
+        <option value="3" @if($paginator->perPage() == 3) selected @endif >3</option>
+        <option value="4" @if($paginator->perPage() == 4) selected @endif >4</option>
+    </select>
+
+    <input type="submit" value="Изменить">
+</form>
+</div>
+</div>
+@endif
+

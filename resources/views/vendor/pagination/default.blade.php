@@ -1,56 +1,106 @@
-@if ($paginator->hasPages())
-    <nav>
-        <ul class="pagination">
-            {{-- Previous Page Link --}}
-            @if ($paginator->onFirstPage())
-                <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                    <span aria-hidden="true">&lsaquo;</span>
-                </li>
-            @else
-                <li>
-                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
-                </li>
-            @endif
+<style>
+    .pagination .page-link,
+    .pagination .page-link:focus,
+    .pagination .page-link:hover {
+        color: black; /* здесь используйте ваш цвет */
+    }
 
-            {{-- Pagination Elements --}}
-            @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
-                @if (is_string($element))
-                    <li class="disabled" aria-disabled="true"><span>{{ $element }}</span></li>
+    .pagination .page-item.active .page-link {
+        background-color: black; /* здесь используйте ваш цвет */
+        border-color: black; /* здесь используйте ваш цвет */
+    }
+</style>
+
+
+@if ($paginator->hasPages())
+    <nav class="d-flex justify-items-center justify-content-between">
+        <div class="d-flex justify-content-between flex-fill d-sm-none">
+            <ul class="pagination">
+                {{-- Previous Page Link --}}
+                @if ($paginator->onFirstPage())
+                    <li class="page-item disabled" aria-disabled="true">
+                        <span class="page-link">@lang('pagination.previous')</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">@lang('pagination.previous')</a>
+                    </li>
                 @endif
 
-                {{-- Array Of Links --}}
-                @if (is_array($element))
-                    @foreach ($element as $page => $url)
-                        @if ($page == $paginator->currentPage())
-                            <li class="active" aria-current="page"><span>{{ $page }}</span></li>
-                        @else
-                            <li><a href="{{ $url }}">{{ $page }}</a></li>
+                {{-- Next Page Link --}}
+                @if ($paginator->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                    </li>
+                @else
+                    <li class="page-item disabled" aria-disabled="true">
+                        <span class="page-link">@lang('pagination.next')</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
+            <div>
+                <ul class="pagination">
+                    {{-- Previous Page Link --}}
+                    @if ($paginator->onFirstPage())
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                            <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                        </li>
+                    @endif
+
+                    {{-- Pagination Elements --}}
+                    @foreach ($elements as $element)
+                        {{-- "Three Dots" Separator --}}
+                        @if (is_string($element))
+                            <li class="page-item disabled bg-dark" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
+                        @endif
+
+                        {{-- Array Of Links --}}
+                        @if (is_array($element))
+                            @foreach ($element as $page => $url)
+                                @if ($page == $paginator->currentPage())
+                                    <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
+                                @else
+                                    <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                @endif
+                            @endforeach
                         @endif
                     @endforeach
-                @endif
-            @endforeach
 
-            {{-- Next Page Link --}}
-            @if ($paginator->hasMorePages())
-                <li>
-                    <a href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</a>
-                </li>
-            @else
-                <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                    <span aria-hidden="true">&rsaquo;</span>
-                </li>
-            @endif
-        </ul>
+                    {{-- Next Page Link --}}
+                    @if ($paginator->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                            <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                        </li>
+                    @endif
+                </ul>
+            </div>
     </nav>
 
-    Элементов на странице:
-    <form method="get" action="{{url('task')}}">
-        <select name="perpage">
-            <option value="2" @if($paginator->perPage() == 2) selected @endif >2</option>
-            <option value="3" @if($paginator->perPage() == 3) selected @endif >3</option>
-            <option value="4" @if($paginator->perPage() == 4) selected @endif >4</option>
-        </select>
-        <input type="submit" value="Изменить">
-    </form>
+<style>
+    .col-4{
+        margin-left: 30px;
+    }
+</style>
+
+<div class="col-4">
+<h6>Элементов на странице:</h6>
+<form method="get" action="{{url('task')}}">
+    <select name="perpage">
+        <option value="2" @if($paginator->perPage() == 2) selected @endif >2</option>
+        <option value="3" @if($paginator->perPage() == 3) selected @endif >3</option>
+        <option value="4" @if($paginator->perPage() == 4) selected @endif >4</option>
+    </select>
+    <button class="btn btn-outline-dark" type="submit">Изменить</button>
+</form>
+        </div>
+
 @endif

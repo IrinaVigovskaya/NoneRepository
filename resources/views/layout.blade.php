@@ -10,15 +10,13 @@
 </head>
 <body class="d-flex flex-column h-100">
 
-    @include('login')
-
     @include('error')
+
+    @include('login')
 
     @section('content')
 
     @show
-
-    @include('footer')
 
 </body>
 </html>

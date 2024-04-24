@@ -31,6 +31,5 @@
     </div>
     @enderror
 </div>
-<a href="{{url('task')}}">Назад</a>
 </body>
 </html>

@@ -94,8 +94,8 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->withErrors([
-            'success' => 'Вы успешно вышли из системы',
+        return redirect('login')->withErrors([
+            'success' => 'Вы успешно вышли из системы'
         ]);
     }
 
@@ -107,7 +107,7 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended('/')->withErrors([
+            return redirect()->intended('task')->withErrors([
                 'success' => 'Вы успешно вошли в систему',
             ]);
         }

@@ -110,10 +110,6 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('destroy-task', Task::all()->where('id', $id)->first())){
-            return redirect('/error')->with('message',
-                'У вас нет разрешения на удаление задачи под номером ' . $id);
-        }
         Task::destroy($id);
         return redirect('/task');
     }

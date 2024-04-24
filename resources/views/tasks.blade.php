@@ -7,16 +7,24 @@
     <meta charset="UTF-8">
     <title>609-11</title>
 </head>
+
+<style>
+    .pagination{
+        margin-left: 300px;
+    }
+</style>
+
 <body>
-    <br><br><br>
-    <h2>Список задач</h2>
-    <table border="1">
+    <br><br><br><br>
+    <h2 style="text-align: center">Список задач</h2><br>
+    <table border="1" class="table table-dark table-striped">
         <thead>
         <td>id</td>
         <td>Название</td>
         <td>Описание</td>
         <td>Срок выполнения</td>
         <td>Пользователь</td>
+        <td></td>
         </thead>
 @foreach ($tasks as $task)
 
@@ -27,13 +35,14 @@
                 <td>{{$task->task_due_date}}</td>
                 <td>{{$task->user_id}}</td>
                 <td>
-                    <a href="{{url('task/destroy/'.$task->id)}}">Удалить</a>
-                    <a href="{{url('task/edit/'.$task->id)}}">Редактировать</a>
+                    <a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{url('task/edit/'.$task->id)}}">Редактировать</a><br>
+                    <a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{url('task/destroy/'.$task->id)}}" >Удалить</a>
                 </td>
 
             </tr>
     @endforeach
     </table>
-    {{ $tasks->links() }}
+<br>
+    <div class="pagination">{{ $tasks->links() }}</div>
 </body>
 </html>

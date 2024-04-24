@@ -2,6 +2,13 @@
 @section('content')
 
 <!DOCTYPE html>
+
+<style>
+    .row{
+        --bs-gutter-x: 1rem;
+    }
+</style>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,10 +16,11 @@
     <style> .is-invalid {color: red} </style>
 </head>
 <body>
-        <h2>Добавление задачи</h2>
-
-    <div class="row justify-content-center"></div>
+<br><br><br>
+<div class="d-flex justify-content-center">
     <div class="col-4">
+        <br>
+        <h2>Добавление задачи</h2><br>
 <form method="post" action="{{url('task')}}">
     @csrf
     <div class="mb-3">
@@ -21,18 +29,6 @@
         id="task_name" name="task_name" aria-describedby="task_nameHelp" value={{ old('task_name') }}>
     <div id="task_nameHelp" class="form-text">Введите название задачи </div>
     @error('task_name')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
-
-<div class="mb-3">
-    <label for="task_description" class="form-label">Описание задачи</label>
-    <input type="text" class="form-control @error('task_description') is-invalid @enderror"
-           id="task_description" name="task_description" aria-describedby="task_descriptionHelp" value={{ old('task_description') }}>
-    <div id="task_descriptionHelp" class="form-text">Введите описание задачи </div>
-    @error('task_description')
     <div class="invalid-feedback">
         {{ $message }}
     </div>
@@ -80,11 +76,10 @@
     </div>
     @enderror
 </div>
-    <button type="submit" class="btn btn-primary">Добавить</button>
-</form>
+    <button type="submit" class="btn btn-outline-dark">Добавить</button>
 </form>
     </div>
+</div>
 </body>
 </html>
 
-@endsection
