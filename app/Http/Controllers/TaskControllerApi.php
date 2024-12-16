@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class TaskControllerApi extends Controller
@@ -54,17 +57,38 @@ class TaskControllerApi extends Controller
 
     public function store(Request $request)
     {
+        if(! Gate::allows('create-task')){
+            return response()->json([
+                'code' => 1,
+                'message' => 'У вас нет прав на добавление задачи',
+            ]);
+        }
         $validated = $request->validate([
             'task_name' => 'required|max:255',
             'task_description'=> 'required|max:500',
             'task_due_date'=>'required|after:now',
-            'user_id'=>'required|integer'
+            'user_id'=>'required|integer',
+            'image'=>'required|file'
         ]);
-
-        // Используйте Task::create(), а не new Task()
-        $task = Task::create($validated);
-
-        return response()->json($task, 201);
+        $file = $request->file('image');
+        $fileName = rand(1, 100000). '_' . $file->getClientOriginalName();
+        try{
+            $path = Storage::disk('s3')->putFileAs('task_pictures', $file, $fileName);
+            $fileUrl = Storage::disk('s3')->url($path);
+        }
+        catch (\Exception $e){
+            return response()->json([
+                'code' => 2,
+                'message' => 'Ошибка загрузки файла в хранилище S3',
+            ]);
+        };
+        $task = new Task($validated);
+        $task->picture_url = $fileUrl;
+        $task->save();
+        return response()->json([
+            'code' => 0,
+            'message' => 'Задача успешно добавлена',
+        ]);
     }
 
     /**

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/task/{id}', [\App\Http\Controllers\TaskControllerApi::class, 'show']);
 
     Route::post('/new', [\App\Http\Controllers\TaskControllerApi::class, 'store']);
-
+    Route::post('/task', [\App\Http\Controllers\TaskControllerApi::class, 'store']);
 });
 
 
